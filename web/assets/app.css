@@ -119,3 +119,12 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--s20)}
 .chero .btn{margin-top:28px;background:var(--w);color:var(--g);border-color:var(--w);min-height:56px;font-size:17px;font-weight:700;width:100%}
 .cta2{display:flex;gap:10px}.cta2 .btn{flex:1}
 .cta2 .wa{border-color:#25D366;color:#128C4A}
+.chero .btn.ol{margin-top:12px;background:transparent;color:var(--w);border:1px solid var(--s);font-weight:500;min-height:52px;font-size:16px}
+.chero.anim .ctop img{animation:ecIn .8s cubic-bezier(.2,.8,.2,1) both}
+.chero.anim .ctop .tg{animation:ecIn2 .8s cubic-bezier(.2,.8,.2,1) .15s both}
+.chero.anim .ctop{animation:ecLine .9s ease-out both}
+@keyframes ecIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes ecIn2{from{opacity:0;transform:translateX(-40px);letter-spacing:.5em}to{opacity:1;transform:none;letter-spacing:.16em}}
+@keyframes ecLine{from{border-bottom-color:transparent}to{border-bottom-color:#3F5654}}
+@media (prefers-reduced-motion:reduce){.chero.anim *{animation:none!important}}
+.chero{overflow:hidden}.chero .ctop{overflow:hidden}

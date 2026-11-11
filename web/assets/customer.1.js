@@ -17,17 +17,20 @@ function view(){
   if(S.cv==='form')return form();if(S.cv==='success')return success();if(S.cv==='track')return track();if(S.cv==='rate')return rate();return home();
 }
 function home(){
-  ensure('trk',{no:new URLSearchParams(location.search).get('no')||'',phone:''});
-  const ph=CFG.companyPhone;
-  return `<div class="chero"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
+  const qno=new URLSearchParams(location.search).get('no')||'';
+  ensure('trk',{no:qno,phone:''});
+  if(S.trkOpen==null)S.trkOpen=!!qno;
+  const ph=CFG.companyPhone;const an=!S.animated;S.animated=true;
+  return `<div class="chero${an?' anim':''}"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
    <h1 class="slogan" aria-label="Stay Warm"><b>STAY</b><i>Warm</i></h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
-   <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button></div>
+   <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button>
+   <button type="button" class="btn blk ol" data-a="toggleTrk" aria-expanded="${S.trkOpen}">متابعة طلب سابق</button></div>
   <div class="pad">
-  <section class="card"><h2>متابعة طلب سابق</h2>
+  ${S.trkOpen?`<section class="card" id="trkCard"><div style="display:flex;justify-content:space-between;align-items:center"><h2>متابعة طلب سابق</h2><button type="button" class="lnk" data-a="toggleTrk">إغلاق</button></div>
    <label class="fld">رقم الطلب${I('trk.no',{ph:'EC-2026-00001',extra:'style="direction:ltr;text-align:right" autocapitalize="characters"'})}</label>
    <label class="fld">رقم الموبايل${I('trk.phone',{type:'tel',ph:'01xxxxxxxxx',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label>
    ${S.err?`<span class="err" role="alert">${esc(S.err)}</span>`:''}
-   <button type="button" class="btn gh" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>
+   <button type="button" class="btn" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>`:''}
    ${ph?`<section class="card"><h2>تواصل معنا</h2><div class="cta2"><a class="btn gh" href="tel:${esc(ph)}">اتصال</a>${waEcho('','','واتساب')}</div><span class="k ltr" style="text-align:center;font-size:14px">${esc(ph)}</span></section>`:''}</div>`;
 }
 function form(){

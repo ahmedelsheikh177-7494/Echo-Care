@@ -46,6 +46,7 @@ async function run(fn){if(S.busy)return;S.busy=true;S.err='';render();try{await 
 async function loadTrack(){if(!S.tok)return;try{S.track=await rpc('get_tracking',{p_token:S.tok})}catch(e){if(!S.track)S.track=null}S.loading=false;render()}
 async function loadRate(){try{S.fb=await rpc('get_feedback',{p_token:S.tok})}catch(e){S.fb=null}S.loading=false;render()}
 const ACT={
+  toggleTrk(){S.trkOpen=!S.trkOpen;S.err='';render();if(S.trkOpen){const c=document.getElementById('trkCard');if(c){c.scrollIntoView({behavior:'smooth',block:'start'});const n=c.querySelector('input');if(n)try{n.focus({preventScroll:true})}catch(e){}}}},
   home(){S.cv='home';S.err='';S.track=null;S.fb=null;if(location.hash)history.replaceState(null,'',location.pathname+location.search);render();window.scrollTo(0,0)},
   newReq(){S.cv='form';S.step=1;S.err='';ensure('req',REQ_DEF);render();window.scrollTo(0,0)},
   pick(v){const [path,val]=v.split('|');const i=path.indexOf('.');getD(path.slice(0,i))[path.slice(i+1)]=val;S.err='';render()},
