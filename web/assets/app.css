@@ -155,3 +155,6 @@ html.intro .chero .ctop{border-bottom-color:transparent}
 @keyframes wipe{from{clip-path:inset(0 100% 0 0);opacity:.2}to{clip-path:inset(0 0 0 0);opacity:1}}
 @keyframes rvUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.splash *,.chero.reveal,.chero.reveal *,.sheet,.sheet-bg{animation:none!important;transition:none!important}}
+.fsheet{top:calc(14px + env(safe-area-inset-top));overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:0;gap:0}
+.fsheet .fhead{position:sticky;top:0;z-index:2;background:var(--w);padding:10px 0 12px;border-bottom:1px solid var(--s40);margin-bottom:16px}
+.fsheet .fbody{display:flex;flex-direction:column;gap:16px}

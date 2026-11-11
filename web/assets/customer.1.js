@@ -7,14 +7,15 @@ function toast(t){S.toast=t;render();clearTimeout(toast._t);toast._t=setTimeout(
 function render(){
   const a=document.activeElement;const id=a&&a.id;let ss=null,se=null;try{ss=a.selectionStart;se=a.selectionEnd}catch(e){}
   const y=window.scrollY;
-  const isHome=sb&&S.cv==='home';
+  const isHome=sb&&(S.cv==='home'||S.cv==='form');const fs=document.querySelector('.fsheet');const fst=fs?fs.scrollTop:0;
   app.innerHTML=`<div class="mob">${isHome?'':`<header class="hdr dk"><a href="./" aria-label="الرئيسية"><img src="assets/logo-light.svg" alt="Echo"></a><span style="font-size:12px;font-weight:500;letter-spacing:.12em;color:var(--s)">ECHO CARE</span></header>`}${view()}</div>${S.toast?`<div class="toast" role="status">${esc(S.toast)}</div>`:''}`;
   if(id){const n=document.getElementById(id);if(n){try{n.focus({preventScroll:true});if(ss!=null&&n.setSelectionRange)n.setSelectionRange(ss,se)}catch(e){}}}
   if(Math.abs(window.scrollY-y)>2)window.scrollTo(0,y);
+  const fs2=document.querySelector('.fsheet');if(fs2&&fst&&!S.fTop)fs2.scrollTop=fst;S.fTop=false;
 }
 function view(){
   if(!sb)return `<div class="pad"><div class="empty">تعذّر تحميل الصفحة. تحقق من الاتصال بالإنترنت ثم أعد المحاولة.</div></div>`;
-  if(S.cv==='form')return form();if(S.cv==='success')return success();if(S.cv==='track')return track();if(S.cv==='rate')return rate();return home();
+  if(S.cv==='form')return home()+formSheet();if(S.cv==='success')return success();if(S.cv==='track')return track();if(S.cv==='rate')return rate();return home();
 }
 function home(){
   const qno=new URLSearchParams(location.search).get('no')||'';
@@ -33,6 +34,12 @@ function home(){
    <label class="fld">رقم الموبايل${I('trk.phone',{type:'tel',ph:'01xxxxxxxxx',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label>
    ${S.err?`<span class="err" role="alert">${esc(S.err)}</span>`:''}
    <button type="button" class="btn" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>`:''}`;
+}
+function formSheet(){
+  const an=S.fAnim;S.fAnim=false;
+  return `<div class="sheet-bg${an?' an':''}" data-a="closeReq"></div><section class="sheet fsheet${an?' an':''}" role="dialog" aria-label="طلب صيانة جديد">
+   <div class="fhead"><i class="grab"></i><div style="display:flex;justify-content:space-between;align-items:center"><h2>طلب صيانة جديد</h2><button type="button" class="lnk" data-a="closeReq" style="font-size:15px">إلغاء</button></div></div>
+   ${form()}</section>`;
 }
 function form(){
   const F=ensure('req',REQ_DEF);const st=S.step;
@@ -56,9 +63,9 @@ function form(){
    <div class="grid3" role="group" aria-label="الفترة">${SLOT.map(s=>`<button type="button" class="tile ${F.slot===s[0]?'on':''}" data-a="pick" data-v="req.slot|${s[0]}" style="align-items:center"><span>${s[1]}</span><small>${s[2]}</small></button>`).join('')}</div>
    <label class="fld"><span>ملاحظات أخرى <span class="opt">(اختياري)</span></span>${T('req.notes','مثال: اتصل قبل الوصول',2)}</label>
    <div class="note">سيراجع فريقنا طلبك ويتصل بك لتأكيد السعر والموعد النهائي.</div>`;
-  const nav=`<div style="display:flex;gap:10px;margin-top:4px">${st>1?`<button type="button" class="btn gh" data-a="stepBack">السابق</button>`:`<button type="button" class="btn gh" data-a="home">إلغاء</button>`}
+  const nav=`<div style="display:flex;gap:10px;margin-top:4px">${st>1?`<button type="button" class="btn gh" data-a="stepBack">السابق</button>`:''}
    ${st<3?`<button type="button" class="btn" style="flex:1" data-a="stepNext">التالي</button>`:`<button type="button" class="btn" style="flex:1;flex-direction:column;gap:0;min-height:58px" data-a="submitReq" ${S.busy||S.uploading?'disabled':''}><span style="font-size:16px;font-weight:700">${S.busy?'جاري الإرسال…':'إرسال طلب الصيانة'}</span><span style="font-size:10px;letter-spacing:.08em;color:var(--s)">SUBMIT MAINTENANCE REQUEST</span></button>`}</div>`;
-  return `<div class="pad">${prog}${inner}${S.err?`<div class="warn" role="alert">${esc(S.err)}</div>`:''}${nav}</div>`;
+  return `<div class="fbody">${prog}${inner}${S.err?`<div class="warn" role="alert">${esc(S.err)}</div>`:''}${nav}</div>`;
 }
 function success(){
   const L=S.last||{};const link=SITE+'#track-'+(L.token||'');

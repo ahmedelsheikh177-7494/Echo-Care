@@ -48,20 +48,21 @@ async function loadRate(){try{S.fb=await rpc('get_feedback',{p_token:S.tok})}cat
 const ACT={
   toggleTrk(){S.trkOpen=!S.trkOpen;S.sheetAnim=S.trkOpen;S.err='';document.body.style.overflow=S.trkOpen?'hidden':'';render();if(S.trkOpen){const n=document.querySelector('#trkCard input');if(n)setTimeout(()=>{try{n.focus({preventScroll:true})}catch(e){}},350)}},
   home(){S.cv='home';document.body.style.overflow='';S.err='';S.track=null;S.fb=null;if(location.hash)history.replaceState(null,'',location.pathname+location.search);render();window.scrollTo(0,0)},
-  newReq(){S.cv='form';S.step=1;S.err='';ensure('req',REQ_DEF);render();window.scrollTo(0,0)},
+  newReq(){S.cv='form';S.step=1;S.err='';S.trkOpen=false;S.fAnim=true;S.fTop=true;document.body.style.overflow='hidden';ensure('req',REQ_DEF);render()},
+  closeReq(){S.cv='home';S.err='';document.body.style.overflow='';render()},
   pick(v){const [path,val]=v.split('|');const i=path.indexOf('.');getD(path.slice(0,i))[path.slice(i+1)]=val;S.err='';render()},
   gps(){if(!navigator.geolocation){toast('تحديد الموقع غير متاح على هذا الجهاز. الصق رابط الموقع بدلًا من ذلك.');return}
     navigator.geolocation.getCurrentPosition(p=>{getD('req').map='https://www.google.com/maps?q='+p.coords.latitude.toFixed(6)+','+p.coords.longitude.toFixed(6);toast('تم تحديد موقعك.');render()},()=>toast('لم نتمكن من تحديد موقعك. الصق رابط الموقع بدلًا من ذلك.'),{enableHighAccuracy:true,timeout:15000})},
-  stepBack(){S.step--;S.err='';render();window.scrollTo(0,0)},
+  stepBack(){S.step--;S.err='';S.fTop=true;render()},
   stepNext(){const F=getD('req');S.err='';
     if(S.step===1){F.phone=normPhone(F.phone);if(F.name.trim().length<3)S.err='اكتب الاسم بالكامل.';else if(!validPhone(F.phone))S.err='رقم الموبايل غير صحيح. مثال: 01012345678';else if(F.email&&!/^\S+@\S+\.\S+$/.test(F.email))S.err='البريد الإلكتروني غير صحيح.';else if(!F.area.trim())S.err='اكتب المنطقة.';else if(F.address.trim().length<8)S.err='اكتب العنوان بالتفصيل.'}
     if(S.step===2){if(!F.system)S.err='اختر نوع نظام التدفئة.';else if(!F.service)S.err='اختر نوع الخدمة.'}
-    if(!S.err){S.step++;window.scrollTo(0,0)}render()},
+    if(!S.err){S.step++;S.fTop=true}render();if(S.err){const w=document.querySelector('.fsheet .warn');if(w)w.scrollIntoView({block:'center',behavior:'smooth'})}},
   submitReq(){const F=getD('req');S.err='';
     if(F.desc.trim().length<5)S.err='اكتب وصفًا للمشكلة.';else if(!F.date||F.date<today())S.err='اختر الموعد المناسب للزيارة (اليوم أو بعده).';else if(!F.slot)S.err='اختر الفترة المناسبة.';
     if(S.err){render();return}
     run(async()=>{const res=await rpc('submit_request',{p:{name:F.name.trim(),phone:F.phone,email:F.email.trim(),governorate:F.gov,area:F.area.trim(),address:F.address.trim(),map_url:F.map.trim(),system:F.system,service:F.service,description:F.desc.trim(),date:F.date,slot:F.slot,notes:F.notes.trim(),media:F.media.map(m=>m.path)}});
-      S.last={no:res.request_no,token:res.token};S.cv='success';drafts.req=null;S.folder=uuid();window.scrollTo(0,0)})},
+      S.last={no:res.request_no,token:res.token};S.cv='success';document.body.style.overflow='';drafts.req=null;S.folder=uuid();window.scrollTo(0,0)})},
   openTrack(v){location.hash='track-'+v},
   copy(v){navigator.clipboard.writeText(v).then(()=>toast('تم نسخ الرابط.')).catch(()=>toast('انسخ الرابط: '+v))},
   findReq(){const F=getD('trk');const no=toLatinDigits(F.no).trim().toUpperCase();const ph=normPhone(F.phone);S.err='';
