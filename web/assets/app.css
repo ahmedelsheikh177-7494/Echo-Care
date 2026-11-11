@@ -116,3 +116,6 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--s20)}
 .chero .btn{margin-top:14px;background:var(--w);color:var(--g);border-color:var(--w);min-height:56px;font-size:17px;width:100%}
 .cta2{display:flex;gap:10px}.cta2 .btn{flex:1}
 .cta2 .wa{border-color:#25D366;color:#128C4A}
+.chero .slogan{display:flex;flex-direction:column;align-items:center;direction:ltr;margin:14px 0 4px;line-height:1}
+.chero .slogan b{font-family:Montserrat,'IBM Plex Sans Arabic',sans-serif;font-weight:700;font-size:56px;letter-spacing:.02em;color:#fff}
+.chero .slogan i{font-family:Allura,cursive;font-style:normal;font-weight:400;font-size:46px;color:var(--s);margin-top:-22px;margin-left:56px}

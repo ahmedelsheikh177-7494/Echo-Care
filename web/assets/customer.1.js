@@ -20,7 +20,7 @@ function home(){
   ensure('trk',{no:new URLSearchParams(location.search).get('no')||'',phone:''});
   const ph=CFG.companyPhone;
   return `<div class="chero"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span>
-   <h1>صيانة أنظمة التدفئة من Echo</h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
+   <h1 class="slogan" aria-label="Stay Warm"><b>STAY</b><i>Warm</i></h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
    <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button></div>
   <div class="pad">
   <section class="card"><h2>متابعة طلب سابق</h2>
