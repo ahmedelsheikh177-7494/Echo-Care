@@ -76,20 +76,23 @@ function body(){
   if(!D.loaded)return `<div class="pad" style="max-width:560px;margin:0 auto"><div class="empty">${D.err?esc(D.err):'جاري تحميل البيانات…'}</div></div>`;
   if(isMgr())return managerView();
   if(isTech())return techView();
-  return `<div class="auth"><div class="hero"><img src="assets/logo-light.svg" alt="Echo"><span style="font-size:13px;letter-spacing:.14em;color:var(--s)">ECHO CARE</span></div><div class="pad">
-   <h1>حسابك بانتظار الموافقة</h1><p style="margin:0;line-height:1.7">${D.me&&D.me.role!=='pending'?'هذا الحساب معطّل حاليًا.':'تم إنشاء حسابك. سيوافق عليه مدير الصيانة، وبعدها تظهر لك مهامك هنا تلقائيًا.'}</p>
-   <button type="button" class="btn gh" data-a="reload">تحديث</button><button type="button" class="lnk" data-a="logout">تسجيل الخروج</button></div></div>`;
+  const off=D.me&&D.me.role!=='pending';
+  return authShell(off?'الحساب غير مفعّل':'حسابك بانتظار الموافقة',off?'هذا الحساب معطّل حاليًا. تواصل مع مدير الصيانة.':'تم إنشاء حسابك. سيوافق عليه مدير الصيانة، وبعدها تظهر لك مهامك هنا تلقائيًا.',
+   `<button type="button" class="btn" style="min-height:52px" data-a="reload">تحديث</button><button type="button" class="lnk" data-a="logout">تسجيل الخروج</button>`,'');
+}
+function authShell(title,sub,card,foot){
+  return `<div class="sauth"><div class="sa-col"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
+   <div class="sa-mark" aria-hidden="true"><img src="assets/icon-sand.svg" alt=""></div><div class="sa-head"><span class="sa-tag">فريق العمل · Team</span><h1>${title}</h1><p>${sub}</p></div>
+   <div class="sa-card">${card}</div>${foot?`<p class="sa-foot">${foot}</p>`:''}</div></div>`;
 }
 function authView(){
-  const L=ensure('login',{email:'',password:''}),U=ensure('signup',{name:'',phone:'',email:'',password:''});
+  ensure('login',{email:'',password:''});ensure('signup',{name:'',phone:'',email:'',password:''});
   const up=S.auth==='signup';
-  return `<div class="auth"><div class="hero"><img src="assets/logo-light.svg" alt="Echo"><span style="font-size:13px;letter-spacing:.14em;color:var(--s)">ECHO CARE</span><span style="font-size:14px;color:var(--s40)">Smart Maintenance Management</span></div>
-  <form onsubmit="return false">
-   <div style="display:flex;flex-direction:column;gap:6px"><h1>${up?'إنشاء حساب لفريق العمل':'تسجيل الدخول'}</h1><span class="k" style="font-size:14px">${up?'بعد إنشاء الحساب يوافق عليه مدير الصيانة.':'لفريق Echo فقط: مدير الصيانة ومهندسو الصيانة.'}</span></div>
+  const card=`<form onsubmit="return false" class="sa-form">
    ${up?`<label class="fld">الاسم بالكامل${I('signup.name',{extra:'autocomplete="name"'})}</label><label class="fld">رقم الموبايل${I('signup.phone',{type:'tel',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label><label class="fld">البريد الإلكتروني${I('signup.email',{type:'email',extra:'autocomplete="username" style="direction:ltr;text-align:right"'})}</label><label class="fld"><span>كلمة المرور <span class="opt">(8 أحرف على الأقل)</span></span>${I('signup.password',{type:'password',extra:'autocomplete="new-password"'})}</label>`
    :`<label class="fld">البريد الإلكتروني${I('login.email',{type:'email',extra:'autocomplete="username" style="direction:ltr;text-align:right"'})}</label><label class="fld">كلمة المرور${I('login.password',{type:'password',extra:'autocomplete="current-password"'})}</label>`}
    ${S.err?`<div class="warn" role="alert">${esc(S.err)}</div>`:''}
-   <button type="submit" class="btn" style="min-height:52px" data-a="${up?'signup':'login'}" ${S.busy?'disabled':''}>${up?'إنشاء الحساب':'دخول'}</button>
-   <button type="button" class="lnk" data-a="authMode" data-v="${up?'login':'signup'}">${up?'لديّ حساب بالفعل · تسجيل الدخول':'مهندس جديد؟ أنشئ حسابك'}</button>
-   <span class="k" style="text-align:center;line-height:1.6;margin-top:auto">نسيت كلمة المرور؟ تواصل مع مدير الصيانة.</span></form></div>`;
+   <button type="submit" class="btn" style="min-height:54px;font-size:16px;font-weight:700" data-a="${up?'signup':'login'}" ${S.busy?'disabled':''}>${up?'إنشاء الحساب':'دخول'}</button>
+   <div class="sa-sw"><span>${up?'لديك حساب بالفعل؟':'مهندس جديد؟'}</span><button type="button" class="lnk" data-a="authMode" data-v="${up?'login':'signup'}">${up?'تسجيل الدخول':'أنشئ حسابك'}</button></div></form>`;
+  return authShell(up?'إنشاء حساب جديد':'تسجيل الدخول',up?'بعد إنشاء الحساب يوافق عليه مدير الصيانة.':'لفريق Echo فقط: مدير الصيانة ومهندسو الصيانة.',card,up?'':'نسيت كلمة المرور؟ تواصل مع مدير الصيانة.');
 }

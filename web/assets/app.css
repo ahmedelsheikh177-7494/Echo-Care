@@ -158,3 +158,24 @@ html.intro .chero .ctop{border-bottom-color:transparent}
 .fsheet{top:calc(14px + env(safe-area-inset-top));overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:0;gap:0}
 .fsheet .fhead{position:sticky;top:0;z-index:2;background:var(--w);padding:10px 0 12px;border-bottom:1px solid var(--s40);margin-bottom:16px}
 .fsheet .fbody{display:flex;flex-direction:column;gap:16px}
+
+.sauth{background:var(--g);min-height:100vh;min-height:100svh;color:var(--w)}
+.sa-col{max-width:440px;margin:0 auto;min-height:100vh;min-height:100svh;padding:0 22px calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.sauth .ctop{height:68px;flex:none;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3F5654}
+.sauth .ctop img{height:26px}.sauth .tg{font-size:12px;letter-spacing:.18em;color:var(--s)}
+.sa-mark{flex:1;min-height:120px;display:flex;align-items:center;justify-content:center}.sa-mark img{width:150px;max-height:70%;opacity:.13}
+.sa-head{display:flex;flex-direction:column;gap:8px;padding:0 2px 24px}
+.sa-tag{font-size:12px;letter-spacing:.12em;color:var(--s)}
+.sa-head h1{color:var(--w);font-size:28px}
+.sa-head p{margin:0;color:var(--s40);line-height:1.7;font-size:15px}
+.sa-card{background:var(--w);color:var(--b);border-radius:22px;padding:22px 18px;box-shadow:0 12px 40px rgba(13,35,32,.3);display:flex;flex-direction:column;gap:12px}
+.sa-form{display:flex;flex-direction:column;gap:16px}
+.sa-sw{display:flex;align-items:center;justify-content:center;gap:4px;font-size:14px;color:var(--m)}.sa-sw .lnk{font-size:14px;font-weight:700;padding:6px 2px}
+.sa-foot{margin:18px 0 0;text-align:center;color:var(--s);font-size:13px}
+.sauth.reveal .sa-head>*,.sauth.reveal .sa-card,.sauth.reveal .sa-foot{animation:rvUp .7s cubic-bezier(.2,.8,.2,1) both}
+.sauth.reveal .sa-head>:nth-child(2){animation-delay:.08s}.sauth.reveal .sa-head>:nth-child(3){animation-delay:.16s}.sauth.reveal .sa-card{animation-delay:.26s}.sauth.reveal .sa-foot{animation-delay:.36s}
+.sauth.reveal .tg{animation:tgIn .7s cubic-bezier(.2,.8,.2,1) both}
+html.intro .sauth .tg,html.intro .sauth .sa-head>*,html.intro .sauth .sa-card,html.intro .sauth .sa-foot{opacity:0}
+@media (prefers-reduced-motion:reduce){.sauth.reveal *{animation:none!important}}
+.sauth.reveal .sa-mark img{animation:markIn 1.2s cubic-bezier(.2,.8,.2,1) both}@keyframes markIn{from{opacity:0;transform:scale(.9) rotate(-6deg)}}
+html.intro .sauth .sa-mark img{opacity:0}
