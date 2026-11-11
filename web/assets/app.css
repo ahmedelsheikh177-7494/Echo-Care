@@ -120,11 +120,20 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--s20)}
 .cta2{display:flex;gap:10px}.cta2 .btn{flex:1}
 .cta2 .wa{border-color:#25D366;color:#128C4A}
 .chero .btn.ol{margin-top:12px;background:transparent;color:var(--w);border:1px solid var(--s);font-weight:500;min-height:52px;font-size:16px}
-.chero.anim .ctop img{animation:ecIn .8s cubic-bezier(.2,.8,.2,1) both}
-.chero.anim .ctop .tg{animation:ecIn2 .8s cubic-bezier(.2,.8,.2,1) .15s both}
-.chero.anim .ctop{animation:ecLine .9s ease-out both}
-@keyframes ecIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
-@keyframes ecIn2{from{opacity:0;transform:translateX(-40px);letter-spacing:.5em}to{opacity:1;transform:none;letter-spacing:.16em}}
-@keyframes ecLine{from{border-bottom-color:transparent}to{border-bottom-color:#3F5654}}
-@media (prefers-reduced-motion:reduce){.chero.anim *{animation:none!important}}
+
 .chero{overflow:hidden}.chero .ctop{overflow:hidden}
+
+.splash{position:fixed;inset:0;z-index:50;background:var(--g);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.7,0,.2,1),opacity .7s}
+.splash.out{transform:translateY(-100%)}
+.sp-in{display:flex;flex-direction:column;align-items:center;gap:16px}
+.sp-in img{height:58px;animation:spLogo .9s cubic-bezier(.2,.8,.2,1) both}
+.sp-line{display:block;height:1px;width:160px;background:var(--s);transform:scaleX(0);animation:spLine .7s ease-out .4s both}
+.sp-tg{display:flex;direction:ltr;font-size:14px;letter-spacing:.3em;color:var(--s)}
+.sp-tg b{font-weight:500;opacity:0;animation:spCh .5s ease-out both}
+@keyframes spLogo{from{opacity:0;transform:scale(.8);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes spLine{to{transform:scaleX(1)}}
+@keyframes spCh{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.chero.reveal .slogan,.chero.reveal p,.chero.reveal .btn{animation:rvUp .7s cubic-bezier(.2,.8,.2,1) both}
+.chero.reveal .slogan{animation-delay:.15s}.chero.reveal p{animation-delay:.3s}.chero.reveal .btn{animation-delay:.42s}.chero.reveal .btn.ol{animation-delay:.52s}
+@keyframes rvUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.splash *,.chero.reveal *{animation:none!important}.splash{transition:opacity .3s}.splash.out{transform:none;opacity:0}}

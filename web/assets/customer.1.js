@@ -20,8 +20,8 @@ function home(){
   const qno=new URLSearchParams(location.search).get('no')||'';
   ensure('trk',{no:qno,phone:''});
   if(S.trkOpen==null)S.trkOpen=!!qno;
-  const ph=CFG.companyPhone;const an=!S.animated;S.animated=true;
-  return `<div class="chero${an?' anim':''}"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
+  const ph=CFG.companyPhone;
+  return `<div class="chero"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
    <h1 class="slogan" aria-label="Stay Warm"><b>STAY</b><i>Warm</i></h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
    <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button>
    <button type="button" class="btn blk ol" data-a="toggleTrk" aria-expanded="${S.trkOpen}">متابعة طلب سابق</button></div>

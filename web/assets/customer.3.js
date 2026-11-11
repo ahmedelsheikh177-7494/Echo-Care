@@ -12,5 +12,17 @@ function route(){const h=location.hash.slice(1);clearInterval(poll);S.err='';S.c
   render();window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.cv==='track')loadTrack()});
+/* Opening motion: full-screen brand splash, then the home page rises in */
+function splash(){
+  if(location.hash||!sb)return;
+  const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const d=document.createElement('div');d.className='splash';d.setAttribute('aria-hidden','true');
+  d.innerHTML='<div class="sp-in"><img src="assets/logo-light.svg" alt=""><i class="sp-line"></i><span class="sp-tg">'+'ECHO CARE'.split('').map((c,i)=>'<b style="animation-delay:'+(0.55+i*0.05).toFixed(2)+'s">'+(c===' '?'&nbsp;':c)+'</b>').join('')+'</span></div>';
+  document.body.appendChild(d);document.body.style.overflow='hidden';
+  let done=false;const end=()=>{if(done)return;done=true;d.classList.add('out');document.body.style.overflow='';
+    const h=app.querySelector('.chero');if(h)h.classList.add('reveal');setTimeout(()=>d.remove(),700)};
+  d.addEventListener('click',end);setTimeout(end,rm?300:2300);
+}
+splash();
 route();
 
