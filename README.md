@@ -15,21 +15,24 @@
 - ملف `supabase/schema.sql` فيه قاعدة البيانات كاملة: الجداول والصلاحيات والوظائف والتخزين. الملف ده متطبّق على المشروع بالفعل، ومحفوظ هنا كمرجع.
 - كل الصلاحيات متطبقة جوه قاعدة البيانات نفسها. المفتاح اللي في `config.js` مفتاح عام، وده طبيعي وآمن.
 
-## النشر على Cloudflare Pages (مجاني)
+## الروابط الرسمية
 
-1. ادخل على dash.cloudflare.com واعمل حساب لو مش موجود.
-2. من Workers & Pages اختار Create، وبعدين Pages، وبعدين Upload assets.
-3. سمّي المشروع `echo-care` وارفع محتويات فولدر `web`.
-4. الموقع هيبقى على `https://echo-care.pages.dev`. وتقدر تربطه بعدين بدومين الشركة من Custom domains.
+- العملاء: https://care.echoheatingsolutions.com
+- فريق العمل: https://care.echoheatingsolutions.com/staff.html
 
-لتحديث الموقع بعد كده: ادخل على نفس المشروع واختار Create new deployment، وارفع الفولدر تاني.
+## الاستضافة: Cloudflare Pages (مجاني)
+
+- المشروع اسمه `echo-care` على Cloudflare Pages، ومربوط بالمستودع ده على GitHub (فرع `main`).
+- الإعدادات: Root directory = `web`، ومفيش Build command.
+- أي تعديل يتعمله push على `main` بيتنشر لوحده خلال دقيقة.
+- الدومين `care.echoheatingsolutions.com` مربوط بسطر CNAME في cPanel ← Zone Editor بيشاور على `echo-care.pages.dev`. متمسحش السطر ده.
 
 ## إعدادات Supabase المطلوبة مرة واحدة
 
 من لوحة Supabase، افتح مشروع ECHO CARE:
 
 1. **Authentication ← Sign In / Providers ← Email**: اقفل «Confirm email». مفيش أي حساب جديد بيشوف بيانات قبل موافقة مدير الصيانة، وخدمة البريد المجانية في Supabase محدودة جدًا.
-2. **Authentication ← URL Configuration**: حط في Site URL رابط الموقع، مثلًا `https://echo-care.pages.dev`.
+2. **Authentication ← URL Configuration**: Site URL = `https://care.echoheatingsolutions.com`.
 
 ## أول مدير صيانة
 
