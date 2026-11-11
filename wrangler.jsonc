@@ -1,0 +1,9 @@
+// Cloudflare hosting for ECHO CARE: a static site (no server code).
+// Cloudflare serves the files in ./web; all data lives in Supabase.
+{
+  "name": "echo-care",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./web"
+  }
+}
