@@ -21,5 +21,6 @@ async function start(){
   if(D.session){await refresh();subscribe()}
   sb.auth.onAuthStateChange((ev,session)=>{const had=!!D.session;D.session=session||null;if(session&&!had){D.loaded=false;render();refresh().then(subscribe)}else if(!session){D.loaded=false;render()}});
 }
+introSplash();
 start();
 

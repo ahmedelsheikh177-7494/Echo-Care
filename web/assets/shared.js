@@ -80,3 +80,25 @@ function waEcho(no,link,desc){const ph=CFG.companyPhone;if(!ph)return '';
   const t=no?`مرحبًا Echo 👋\nأتواصل بخصوص طلب الصيانة.\nرقم الطلب: ${no}\nرابط المتابعة: ${link}\nاستفساري: `
     :`مرحبًا Echo 👋\nأريد التواصل بخصوص صيانة التدفئة.\nالمشكلة: \nرقم الطلب (إن وُجد): \nرابط المتابعة (إن وُجد): `;
   return `<a class="btn gh wa" href="${esc(waLink(normPhone(ph),t))}" target="_blank" rel="noopener">${desc||'واتساب خدمة العملاء'}</a>`}
+
+/* Opening motion shared by every ECHO CARE page: brand splash, then the logo glides into
+   the page's own logo (whichever is visible) and the page appears. Tap to skip. */
+function introSplash(onReveal){
+  if(window.__ecSplash)return;window.__ecSplash=1;
+  const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const d=document.createElement('div');d.className='splash';d.setAttribute('aria-hidden','true');
+  d.innerHTML='<div class="sp-in"><img class="sp-logo" src="assets/logo-light.svg" alt=""><i class="sp-line"></i><span class="sp-tg">'+'ECHO CARE'.split('').map((c,i)=>'<b style="animation-delay:'+(0.6+i*0.05).toFixed(2)+'s">'+(c===' '?'&nbsp;':c)+'</b>').join('')+'</span></div>';
+  document.body.appendChild(d);document.documentElement.classList.add('intro');
+  const target=()=>[...document.querySelectorAll('#app img[src*="logo-light"]')].find(e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&r.top<innerHeight});
+  let stage=0,tg=null;
+  const reveal=()=>{if(stage>1)return;stage=2;document.documentElement.classList.remove('intro');
+    if(tg)tg.style.visibility='';if(onReveal)try{onReveal()}catch(e){}
+    d.classList.add('gone');setTimeout(()=>d.remove(),500)};
+  const glide=()=>{if(stage)return;stage=1;d.classList.add('leave');
+    const lg=d.querySelector('.sp-logo');tg=target();
+    if(lg&&tg){lg.style.animation='none';tg.style.visibility='hidden';const a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect();
+      lg.style.transform=`translate(${(b.left+b.width/2)-(a.left+a.width/2)}px,${(b.top+b.height/2)-(a.top+a.height/2)}px) scale(${b.height/a.height})`;setTimeout(reveal,750)}
+    else{lg.style.transition='opacity .4s';lg.style.opacity='0';setTimeout(reveal,350)}};
+  d.addEventListener('click',()=>{stage=1;reveal()});
+  if(rm)setTimeout(reveal,300);else setTimeout(glide,1700);
+}

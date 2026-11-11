@@ -12,24 +12,6 @@ function route(){const h=location.hash.slice(1);clearInterval(poll);S.err='';S.c
   render();window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.cv==='track')loadTrack()});
-/* Opening motion: brand splash; the logo then glides into the header and the page rises in */
-function splash(){
-  if(location.hash||!sb)return;
-  const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const d=document.createElement('div');d.className='splash';d.setAttribute('aria-hidden','true');
-  d.innerHTML='<div class="sp-in"><img class="sp-logo" src="assets/logo-light.svg" alt=""><i class="sp-line"></i><span class="sp-tg">'+'ECHO CARE'.split('').map((c,i)=>'<b style="animation-delay:'+(0.6+i*0.05).toFixed(2)+'s">'+(c===' '?'&nbsp;':c)+'</b>').join('')+'</span></div>';
-  document.body.appendChild(d);document.documentElement.classList.add('intro');
-  let stage=0;
-  const reveal=()=>{if(stage>1)return;stage=2;document.documentElement.classList.remove('intro');
-    const h=app.querySelector('.chero');if(h)h.classList.add('reveal');d.classList.add('gone');setTimeout(()=>d.remove(),500)};
-  const glide=()=>{if(stage)return;stage=1;d.classList.add('leave');
-    const lg=d.querySelector('.sp-logo'),tg=app.querySelector('.ctop img');
-    if(lg&&tg){lg.style.animation='none';const a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect();const sc=b.height/a.height;
-      lg.style.transform=`translate(${(b.left+b.width/2)-(a.left+a.width/2)}px,${(b.top+b.height/2)-(a.top+a.height/2)}px) scale(${sc})`}
-    setTimeout(reveal,750)};
-  d.addEventListener('click',()=>{stage=1;reveal()});
-  if(rm)setTimeout(reveal,300);else setTimeout(glide,1700);
-}
-splash();
+introSplash(()=>{const h=document.querySelector('#app .chero');if(h)h.classList.add('reveal')});
 route();
 
