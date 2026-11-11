@@ -108,32 +108,50 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--s20)}
 .offline{background:var(--c);color:var(--w);text-align:center;padding:6px;font-size:13px}
 @media print{.topbar,.side,.bnav,.btn,.lnk{display:none!important}}
 
-.chero{background:var(--g);color:var(--w);padding:0 20px 28px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.chero .ctop{width:100%;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3F5654}
+.chero{background:var(--g);color:var(--w);padding:0 22px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;min-height:100vh;min-height:100svh;overflow:hidden}
+.chero .ctop{height:68px;flex:none;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3F5654}
 .chero .ctop img{height:26px}
-.chero .tg{font-size:12px;letter-spacing:.16em;color:var(--s)}
-.chero .slogan{display:flex;flex-direction:column;align-items:center;direction:ltr;margin:40px 0 0;line-height:1}
-.chero .slogan b{font-family:Montserrat,'IBM Plex Sans Arabic',sans-serif;font-weight:700;font-size:60px;letter-spacing:.03em;color:#fff}
-.chero .slogan i{font-family:Allura,cursive;font-style:normal;font-weight:400;font-size:50px;color:var(--s);margin-top:-18px;margin-left:60px}
-.chero p{margin:20px 0 0;line-height:1.7;color:var(--s40);font-size:15px;max-width:320px}
-.chero .btn{margin-top:28px;background:var(--w);color:var(--g);border-color:var(--w);min-height:56px;font-size:17px;font-weight:700;width:100%}
+.chero .tg{font-size:12px;letter-spacing:.18em;color:var(--s)}
+.chero .cmid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;padding:32px 0}
+.chero .slogan{margin:0;width:78%;max-width:320px;line-height:0}
+.chero .slogan img{width:100%;height:auto}
+.chero p{margin:0;line-height:1.75;color:var(--s40);font-size:15px;max-width:300px}
+.chero .cact{display:flex;flex-direction:column;gap:12px}
+.chero .btn{min-height:56px;font-size:17px;width:100%;border-radius:14px}
+.chero .btn:not(.ol){background:var(--w);color:var(--g);font-weight:700}
+.chero .btn.ol{background:transparent;color:var(--w);border:1px solid #5E7472;font-weight:500}
+.chero .ccon{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px;font-size:14px;color:var(--s)}
+.chero .ccon a{color:var(--w);text-decoration:none;font-weight:500;padding:8px 4px}
+.chero .ccon i{width:1px;height:14px;background:#5E7472}
+.sheet-bg{position:fixed;inset:0;background:rgba(13,35,32,.55);z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:480px;z-index:21;background:var(--w);border-radius:22px 22px 0 0;padding:10px 20px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;box-shadow:0 -10px 40px rgba(13,35,32,.25)}
+.sheet .grab{display:block;width:40px;height:4px;border-radius:2px;background:var(--s);margin:4px auto 6px}
+.sheet-bg.an{animation:fadeIn .3s ease both}.sheet.an{animation:sheetUp .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fadeIn{from{opacity:0}}@keyframes sheetUp{from{transform:translateY(100%)}}
 .cta2{display:flex;gap:10px}.cta2 .btn{flex:1}
 .cta2 .wa{border-color:#25D366;color:#128C4A}
-.chero .btn.ol{margin-top:12px;background:transparent;color:var(--w);border:1px solid var(--s);font-weight:500;min-height:52px;font-size:16px}
-
-.chero{overflow:hidden}.chero .ctop{overflow:hidden}
-
-.splash{position:fixed;inset:0;z-index:50;background:var(--g);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.7,0,.2,1),opacity .7s}
-.splash.out{transform:translateY(-100%)}
-.sp-in{display:flex;flex-direction:column;align-items:center;gap:16px}
-.sp-in img{height:58px;animation:spLogo .9s cubic-bezier(.2,.8,.2,1) both}
-.sp-line{display:block;height:1px;width:160px;background:var(--s);transform:scaleX(0);animation:spLine .7s ease-out .4s both}
-.sp-tg{display:flex;direction:ltr;font-size:14px;letter-spacing:.3em;color:var(--s)}
+.splash{position:fixed;inset:0;z-index:50;background:var(--g);display:flex;align-items:center;justify-content:center;transition:background-color .45s ease}
+.splash.gone{background-color:transparent;pointer-events:none}
+.splash.gone .sp-logo{opacity:0;transition:opacity .2s .1s}
+.sp-in{display:flex;flex-direction:column;align-items:center;gap:18px}
+.sp-logo{height:60px;animation:spLogo 1s cubic-bezier(.2,.8,.2,1) both;transition:transform .75s cubic-bezier(.65,0,.25,1)}
+.sp-line{display:block;height:1px;width:170px;background:var(--s);transform:scaleX(0);animation:spLine .7s cubic-bezier(.2,.8,.2,1) .45s both;transition:opacity .3s,transform .4s}
+.sp-tg{display:flex;direction:ltr;font-size:14px;letter-spacing:.32em;color:var(--s);transition:opacity .3s,transform .4s}
 .sp-tg b{font-weight:500;opacity:0;animation:spCh .5s ease-out both}
-@keyframes spLogo{from{opacity:0;transform:scale(.8);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.splash.leave .sp-line,.splash.leave .sp-tg{opacity:0;transform:translateY(10px)}
+@keyframes spLogo{from{opacity:0;transform:scale(.82);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
 @keyframes spLine{to{transform:scaleX(1)}}
 @keyframes spCh{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.chero.reveal .slogan,.chero.reveal p,.chero.reveal .btn{animation:rvUp .7s cubic-bezier(.2,.8,.2,1) both}
-.chero.reveal .slogan{animation-delay:.15s}.chero.reveal p{animation-delay:.3s}.chero.reveal .btn{animation-delay:.42s}.chero.reveal .btn.ol{animation-delay:.52s}
-@keyframes rvUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.splash *,.chero.reveal *{animation:none!important}.splash{transition:opacity .3s}.splash.out{transform:none;opacity:0}}
+html.intro .chero .ctop img,html.intro .chero .ctop .tg,html.intro .chero .ctop,html.intro .chero .cmid>*,html.intro .chero .cact>*{opacity:0}
+html.intro .chero .ctop{border-bottom-color:transparent}
+.chero.reveal .ctop{animation:lineIn .6s ease both}
+.chero.reveal .tg{animation:tgIn .7s cubic-bezier(.2,.8,.2,1) both}
+.chero.reveal .slogan{animation:wipe 1s cubic-bezier(.6,0,.2,1) .1s both}
+.chero.reveal .cmid p{animation:rvUp .7s cubic-bezier(.2,.8,.2,1) .45s both}
+.chero.reveal .cact>*{animation:rvUp .7s cubic-bezier(.2,.8,.2,1) both}
+.chero.reveal .cact>:nth-child(1){animation-delay:.6s}.chero.reveal .cact>:nth-child(2){animation-delay:.7s}.chero.reveal .cact>:nth-child(3){animation-delay:.8s}
+@keyframes lineIn{from{border-bottom-color:transparent}}
+@keyframes tgIn{from{opacity:0;letter-spacing:.5em}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0);opacity:.2}to{clip-path:inset(0 0 0 0);opacity:1}}
+@keyframes rvUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.splash *,.chero.reveal,.chero.reveal *,.sheet,.sheet-bg{animation:none!important;transition:none!important}}

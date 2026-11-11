@@ -20,18 +20,19 @@ function home(){
   const qno=new URLSearchParams(location.search).get('no')||'';
   ensure('trk',{no:qno,phone:''});
   if(S.trkOpen==null)S.trkOpen=!!qno;
-  const ph=CFG.companyPhone;
+  const ph=CFG.companyPhone;const sa=S.sheetAnim;S.sheetAnim=false;
   return `<div class="chero"><div class="ctop"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span></div>
-   <h1 class="slogan" aria-label="Stay Warm"><b>STAY</b><i>Warm</i></h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
-   <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button>
-   <button type="button" class="btn blk ol" data-a="toggleTrk" aria-expanded="${S.trkOpen}">متابعة طلب سابق</button></div>
-  <div class="pad">
-  ${S.trkOpen?`<section class="card" id="trkCard"><div style="display:flex;justify-content:space-between;align-items:center"><h2>متابعة طلب سابق</h2><button type="button" class="lnk" data-a="toggleTrk">إغلاق</button></div>
+   <div class="cmid"><h1 class="slogan"><img src="assets/stay-warm.webp" alt="Stay Warm" width="840" height="406"></h1>
+    <p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p></div>
+   <div class="cact"><button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button>
+    <button type="button" class="btn blk ol" data-a="toggleTrk" aria-expanded="${S.trkOpen}">متابعة طلب سابق</button>
+    ${ph?`<div class="ccon"><span>تواصل معنا</span><a href="tel:${esc(ph)}">اتصال</a><i></i>${waEcho('','','واتساب').replace('class="btn gh wa"','class="wa"')}</div>`:''}</div></div>
+  ${S.trkOpen?`<div class="sheet-bg${sa?' an':''}" data-a="toggleTrk"></div><section class="sheet${sa?' an':''}" id="trkCard" role="dialog" aria-label="متابعة طلب سابق"><i class="grab"></i>
+   <div style="display:flex;justify-content:space-between;align-items:center"><h2>متابعة طلب سابق</h2><button type="button" class="lnk" data-a="toggleTrk">إغلاق</button></div>
    <label class="fld">رقم الطلب${I('trk.no',{ph:'EC-2026-00001',extra:'style="direction:ltr;text-align:right" autocapitalize="characters"'})}</label>
    <label class="fld">رقم الموبايل${I('trk.phone',{type:'tel',ph:'01xxxxxxxxx',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label>
    ${S.err?`<span class="err" role="alert">${esc(S.err)}</span>`:''}
-   <button type="button" class="btn" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>`:''}
-   ${ph?`<section class="card"><h2>تواصل معنا</h2><div class="cta2"><a class="btn gh" href="tel:${esc(ph)}">اتصال</a>${waEcho('','','واتساب')}</div><span class="k ltr" style="text-align:center;font-size:14px">${esc(ph)}</span></section>`:''}</div>`;
+   <button type="button" class="btn" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>`:''}`;
 }
 function form(){
   const F=ensure('req',REQ_DEF);const st=S.step;
