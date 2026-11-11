@@ -28,7 +28,7 @@ function home(){
    <label class="fld">رقم الموبايل${I('trk.phone',{type:'tel',ph:'01xxxxxxxxx',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label>
    ${S.err?`<span class="err" role="alert">${esc(S.err)}</span>`:''}
    <button type="button" class="btn gh" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>
-   ${ph?`<section class="card"><h2>تواصل معنا</h2><div class="cta2"><a class="btn gh" href="tel:${esc(ph)}">اتصال</a><a class="btn gh wa" href="${esc(waLink(normPhone(ph),'مرحبًا Echo، عندي استفسار عن الصيانة'))}" target="_blank" rel="noopener">واتساب</a></div><span class="k ltr" style="text-align:center;font-size:14px">${esc(ph)}</span></section>`:''}</div>`;
+   ${ph?`<section class="card"><h2>تواصل معنا</h2><div class="cta2"><a class="btn gh" href="tel:${esc(ph)}">اتصال</a>${waEcho('','','واتساب')}</div><span class="k ltr" style="text-align:center;font-size:14px">${esc(ph)}</span></section>`:''}</div>`;
 }
 function form(){
   const F=ensure('req',REQ_DEF);const st=S.step;
@@ -64,6 +64,7 @@ function success(){
    <section class="card" style="width:100%;align-items:center"><span class="k">رقم الطلب</span><b class="ltr" style="font-size:28px;letter-spacing:.04em">${esc(L.no||'')}</b><span class="chip s-new">قيد المراجعة · Pending Review</span></section>
    <div class="note" style="text-align:right;width:100%">احتفظ برقم الطلب ورقم موبايلك لمتابعة الطلب في أي وقت، أو احفظ رابط المتابعة.</div>
    <button type="button" class="btn blk" data-a="openTrack" data-v="${esc(L.token||'')}">متابعة حالة الطلب</button>
+   ${CFG.companyPhone?`<div style="width:100%;display:flex;flex-direction:column">${waEcho(L.no||'',link,'إرسال رقم الطلب لخدمة العملاء على واتساب')}</div>`:''}
    <button type="button" class="btn gh blk" data-a="copy" data-v="${esc(link)}">نسخ رابط المتابعة</button>
    <button type="button" class="lnk" data-a="home">العودة للرئيسية</button></div>`;
 }

@@ -74,3 +74,9 @@ async function rpc(name,args){const {data,error}=await sb.rpc(name,args||{});if(
 
 /* PWA */
 if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+
+/* WhatsApp to Echo customer service, pre-filled */
+function waEcho(no,link,desc){const ph=CFG.companyPhone;if(!ph)return '';
+  const t=no?`مرحبًا Echo 👋\nأتواصل بخصوص طلب الصيانة.\nرقم الطلب: ${no}\nرابط المتابعة: ${link}\nاستفساري: `
+    :`مرحبًا Echo 👋\nأريد التواصل بخصوص صيانة التدفئة.\nالمشكلة: \nرقم الطلب (إن وُجد): \nرابط المتابعة (إن وُجد): `;
+  return `<a class="btn gh wa" href="${esc(waLink(normPhone(ph),t))}" target="_blank" rel="noopener">${desc||'واتساب خدمة العملاء'}</a>`}

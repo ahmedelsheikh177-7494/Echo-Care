@@ -13,7 +13,7 @@ function track(){
    ${r.status!=='cancelled'?`<section class="card"><h2>حالة الطلب</h2><div class="tl">${steps.map((s,i)=>`<div><i style="${i<=stg?'':'background:#fff;border:1.5px solid var(--s)'}${i===stg&&r.status==='needs_follow'?';background:var(--c)':''}"></i><span class="grow" style="${i<=stg?'font-weight:500':'color:var(--m)'}">${s}</span></div>`).join('')}</div></section>`:''}
    <section class="card"><div class="kv"><div><span class="k">النظام</span>${esc(lab(SYS,r.system))}</div><div><span class="k">الخدمة</span>${esc(lab(SVC,r.service))}</div><div><span class="k">الموعد المطلوب</span>${r.preferred_date?esc(fmtD(r.preferred_date))+' · '+esc(lab(SLOT,r.preferred_slot)):'يحدده فريقنا'}</div></div></section>
    <section class="card"><h2>الإشعارات</h2>${(r.notifications||[]).length?r.notifications.map(n=>`<div style="display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.6"><span>${esc(n.body)}</span><span class="k">${esc(ago(n.at))}</span></div>`).join(''):'<span class="k">لا توجد إشعارات.</span>'}</section>
-   ${CFG.companyPhone?`<a class="btn gh" href="tel:${esc(CFG.companyPhone)}">اتصل بخدمة العملاء <span class="ltr">${esc(CFG.companyPhone)}</span></a>`:''}
+   ${CFG.companyPhone?`<div class="cta2"><a class="btn gh" href="tel:${esc(CFG.companyPhone)}">اتصال</a>${waEcho(r.request_no,location.href,'واتساب')}</div>`:''}
    <button type="button" class="btn gh" data-a="home">الرئيسية</button></div>`;
 }
 function decision(r){
