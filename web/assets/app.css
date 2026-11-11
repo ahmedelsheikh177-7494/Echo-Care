@@ -107,3 +107,12 @@ tr.click{cursor:pointer}tr.click:hover td{background:var(--s20)}
 .topbar .who{margin-inline-start:auto;display:flex;align-items:center;gap:8px}
 .offline{background:var(--c);color:var(--w);text-align:center;padding:6px;font-size:13px}
 @media print{.topbar,.side,.bnav,.btn,.lnk{display:none!important}}
+
+.chero{background:var(--g);color:var(--w);padding:28px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.chero img{height:40px}
+.chero .tg{font-size:12px;letter-spacing:.16em;color:var(--s)}
+.chero h1{font-size:24px;color:var(--w);margin:10px 0 0}
+.chero p{margin:0;line-height:1.7;color:var(--s40);font-size:15px}
+.chero .btn{margin-top:14px;background:var(--w);color:var(--g);border-color:var(--w);min-height:56px;font-size:17px;width:100%}
+.cta2{display:flex;gap:10px}.cta2 .btn{flex:1}
+.cta2 .wa{border-color:#25D366;color:#128C4A}

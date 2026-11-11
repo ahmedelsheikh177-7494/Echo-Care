@@ -7,7 +7,8 @@ function toast(t){S.toast=t;render();clearTimeout(toast._t);toast._t=setTimeout(
 function render(){
   const a=document.activeElement;const id=a&&a.id;let ss=null,se=null;try{ss=a.selectionStart;se=a.selectionEnd}catch(e){}
   const y=window.scrollY;
-  app.innerHTML=`<div class="mob"><header class="hdr"><a href="./" aria-label="الرئيسية"><img src="assets/logo-dark.svg" alt="Echo"></a><span style="font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--g)">ECHO CARE</span></header>${view()}</div>${S.toast?`<div class="toast" role="status">${esc(S.toast)}</div>`:''}`;
+  const isHome=sb&&S.cv==='home';
+  app.innerHTML=`<div class="mob">${isHome?'':`<header class="hdr dk"><a href="./" aria-label="الرئيسية"><img src="assets/logo-light.svg" alt="Echo"></a><span style="font-size:12px;font-weight:500;letter-spacing:.12em;color:var(--s)">ECHO CARE</span></header>`}${view()}</div>${S.toast?`<div class="toast" role="status">${esc(S.toast)}</div>`:''}`;
   if(id){const n=document.getElementById(id);if(n){try{n.focus({preventScroll:true});if(ss!=null&&n.setSelectionRange)n.setSelectionRange(ss,se)}catch(e){}}}
   if(Math.abs(window.scrollY-y)>2)window.scrollTo(0,y);
 }
@@ -17,14 +18,17 @@ function view(){
 }
 function home(){
   ensure('trk',{no:new URLSearchParams(location.search).get('no')||'',phone:''});
-  return `<div class="pad">
-  <div style="display:flex;flex-direction:column;gap:8px;padding:12px 0"><h1 style="font-size:26px">صيانة أنظمة التدفئة من Echo</h1><p style="margin:0;line-height:1.7;color:#3B4A48">أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p></div>
-  <button type="button" class="btn blk" data-a="newReq" style="min-height:56px;font-size:17px">طلب صيانة جديد</button>
+  const ph=CFG.companyPhone;
+  return `<div class="chero"><img src="assets/logo-light.svg" alt="Echo"><span class="tg">ECHO CARE</span>
+   <h1>صيانة أنظمة التدفئة من Echo</h1><p>أرسل طلبك في دقيقتين، وسيتواصل معك فريقنا لتأكيد السعر والموعد.</p>
+   <button type="button" class="btn blk" data-a="newReq">طلب صيانة جديد</button></div>
+  <div class="pad">
   <section class="card"><h2>متابعة طلب سابق</h2>
    <label class="fld">رقم الطلب${I('trk.no',{ph:'EC-2026-00001',extra:'style="direction:ltr;text-align:right" autocapitalize="characters"'})}</label>
    <label class="fld">رقم الموبايل${I('trk.phone',{type:'tel',ph:'01xxxxxxxxx',extra:'inputmode="tel" style="direction:ltr;text-align:right"'})}</label>
    ${S.err?`<span class="err" role="alert">${esc(S.err)}</span>`:''}
-   <button type="button" class="btn gh" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section></div>`;
+   <button type="button" class="btn gh" data-a="findReq" ${S.busy?'disabled':''}>عرض حالة الطلب</button></section>
+   ${ph?`<section class="card"><h2>تواصل معنا</h2><div class="cta2"><a class="btn gh" href="tel:${esc(ph)}">اتصال</a><a class="btn gh wa" href="${esc(waLink(normPhone(ph),'مرحبًا Echo، عندي استفسار عن الصيانة'))}" target="_blank" rel="noopener">واتساب</a></div><span class="k ltr" style="text-align:center;font-size:14px">${esc(ph)}</span></section>`:''}</div>`;
 }
 function form(){
   const F=ensure('req',REQ_DEF);const st=S.step;
